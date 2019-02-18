@@ -1,9 +1,29 @@
 FROM ubuntu
 
+# set default build arguments
+ARG SDK_VERSION=sdk-tools-linux-4333796.zip
+ARG ANDROID_BUILD_VERSION=28
+ARG ANDROID_TOOLS_VERSION=28.0.3
+ARG BUCK_VERSION=2019.01.10.01
+ARG NDK_VERSION=17c
+ARG WATCHMAN_VERSION=4.9.0
+
+# set default environment variables
 ENV JAVA_HOME       /usr/lib/jvm/java-8-oracle
+ENV PATH=${PATH}:${JAVA_HOME}
 ENV LANG            en_US.UTF-8
 ENV LC_ALL          en_US.UTF-8
+ENV ADB_INSTALL_TIMEOUT=10
+ENV PATH=${PATH}:/opt/buck/bin/
+ENV ANDROID_HOME=/opt/android
+ENV ANDROID_SDK_HOME=${ANDROID_HOME}
+ENV PATH=${PATH}:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+ENV ANDROID_NDK=/opt/ndk/android-ndk-r$NDK_VERSION
+ENV ANDROID_NDK_HOME=/opt/ndk/android-ndk-r$NDK_VERSION
+ENV PATH=${PATH}:${ANDROID_NDK}
 
+
+# install Oracle Java
 RUN apt-get update && \
   apt-get install -y gnupg2 && \
   apt-get install -y --no-install-recommends locales && \
@@ -16,24 +36,6 @@ RUN apt-get update && \
   apt-get update && \
   apt-get install -y --no-install-recommends oracle-java8-installer oracle-java8-set-default && \
   apt-get clean all
-
-# set default build arguments
-ARG SDK_VERSION=sdk-tools-linux-4333796.zip
-ARG ANDROID_BUILD_VERSION=28
-ARG ANDROID_TOOLS_VERSION=28.0.3
-ARG BUCK_VERSION=2019.01.10.01
-ARG NDK_VERSION=17c
-ARG WATCHMAN_VERSION=4.9.0
-
-# set default environment variables
-ENV ADB_INSTALL_TIMEOUT=10
-ENV PATH=${PATH}:/opt/buck/bin/
-ENV ANDROID_HOME=/opt/android
-ENV ANDROID_SDK_HOME=${ANDROID_HOME}
-ENV PATH=${PATH}:${ANDROID_HOME}/emulator:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-ENV ANDROID_NDK=/opt/ndk/android-ndk-r$NDK_VERSION
-ENV ANDROID_NDK_HOME=/opt/ndk/android-ndk-r$NDK_VERSION
-ENV PATH=${PATH}:${ANDROID_NDK}
 
 # install system dependencies
 RUN apt-get update -qq && apt-get install -qq -y --no-install-recommends \

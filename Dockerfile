@@ -88,3 +88,6 @@ RUN cd ~ && mkdir ~/.android && echo '### User Sources for Android SDK Manager' 
         "add-ons;addon-google_apis-google-23" \
         "system-images;android-19;google_apis;armeabi-v7a" \
         "extras;android;m2repository"
+        
+# Set file watches
+RUN echo fs.inotify.max_user_watches=1048576 | tee -a /etc/sysctl.conf && /sbin/sysctl -p

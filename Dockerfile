@@ -1,6 +1,5 @@
 FROM ubuntu
 
-ENV DEBIAN_FRONTEND noninteractive
 ENV JAVA_HOME       /usr/lib/jvm/java-8-oracle
 ENV LANG            en_US.UTF-8
 ENV LC_ALL          en_US.UTF-8

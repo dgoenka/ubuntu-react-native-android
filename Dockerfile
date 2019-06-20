@@ -91,3 +91,8 @@ RUN cd ~ && mkdir ~/.android && echo '### User Sources for Android SDK Manager' 
         
 # Set file watches
 RUN echo fs.inotify.max_user_watches=1048576 | tee -a /etc/sysctl.conf && /sbin/sysctl -p
+
+#  Install python
+RUN sudo apt-get update
+
+RUN sudo apt-get install python
